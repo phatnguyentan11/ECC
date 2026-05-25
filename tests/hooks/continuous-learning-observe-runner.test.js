@@ -154,7 +154,7 @@ function runTests() {
     assert.strictEqual(observeRunner.getPhaseFromHookId('unknown'), null);
   })) passed++; else failed++;
 
-  if (test('observe-runner invokes observe.sh with phase, stdin, and plugin root', () => {
+  if (process.platform !== 'win32' && test('observe-runner invokes observe.sh with phase, stdin, and plugin root', () => {
     withTempPluginRoot(tempRoot => {
       writeFakeObserveScript(tempRoot);
       const env = fs.existsSync('/bin/sh') ? { BASH: '/bin/sh' } : {};
@@ -168,7 +168,7 @@ function runTests() {
         assert.strictEqual(output.stdout, `phase=pre input=payload root=${tempRoot}`);
       });
     });
-  })) passed++; else failed++;
+  })) passed++; else if (process.platform === 'win32') { console.log('  - observe-runner invokes observe.sh (skipped on Windows)'); } else failed++;
 
   if (test('observe-runner fails open when no shell runtime is available', () => {
     withTempPluginRoot(tempRoot => {

@@ -123,31 +123,6 @@ const ADAPTER_RECORDS = Object.freeze([
     ],
   },
   {
-    id: 'cursor',
-    harness: 'Cursor',
-    state: 'Adapter-backed',
-    supported_assets: [
-      'Cursor rules',
-      'project-local skills',
-      'hook adapter',
-      'shared scripts',
-    ],
-    unsupported_surfaces: ['Cursor hook events and rule loading differ from Claude Code'],
-    install_or_onramp: ['`./install.sh --profile minimal --target cursor`'],
-    verification_commands: [
-      '`node tests/lib/install-targets.test.js`',
-      '`npm run harness:audit -- --format json`',
-    ],
-    risk_notes: ['Cursor adapters must preserve existing project rules and avoid silent overwrite.'],
-    last_verified_at: '2026-05-12',
-    owner: 'ECC maintainers',
-    source_docs: [
-      '.cursor/',
-      'scripts/lib/install-targets/cursor-project.js',
-      'tests/lib/install-targets.test.js',
-    ],
-  },
-  {
     id: 'gemini',
     harness: 'Gemini',
     state: 'Instruction-backed',

@@ -1,7 +1,7 @@
 spec_version: "0.1.0"
 name: ecc
 version: 2.0.0-rc.1
-description: "Initial gitagent export surface for ECC's shared skill catalog, governance, and identity. Native agents, commands, and hooks remain authoritative in the repository while manifest coverage expands."
+description: "AI agent operating system for Claude Code and GitHub Copilot. Focused on ASP.NET Core 8+, Dapper/EF Core, React JS, PostgreSQL, and SQL Server. Skills, hooks, agents, and rules for .NET backend and React frontend teams."
 author: affaan-m
 license: MIT
 model:
@@ -9,149 +9,101 @@ model:
   fallback:
     - claude-sonnet-4-6
 skills:
+  - accessibility
   - agent-architecture-audit
   - agent-eval
   - agent-harness-construction
-  - agent-payment-x402
+  - agent-introspection-debugging
+  - agent-sort
   - agentic-engineering
   - agentic-os
   - ai-first-engineering
   - ai-regression-testing
-  - android-clean-architecture
+  - api-connector-builder
   - api-design
   - architecture-decision-records
-  - article-writing
+  - autonomous-agent-harness
   - autonomous-loops
   - backend-patterns
   - benchmark
   - blueprint
   - browser-qa
-  - bun-runtime
   - canary-watch
-  - carrier-relationship-management
-  - ck
   - claude-devfleet
-  - click-path-audit
-  - clickhouse-io
+  - code-tour
   - codebase-onboarding
   - coding-standards
-  - compose-multiplatform-patterns
   - configure-ecc
-  - content-engine
   - content-hash-cache-pattern
   - context-budget
   - continuous-agent-loop
   - continuous-learning
   - continuous-learning-v2
   - cost-aware-llm-pipeline
-  - cpp-coding-standards
-  - cpp-testing
-  - crosspost
-  - customs-trade-compliance
-  - data-scraper-agent
+  - cost-tracking
+  - council
+  - csharp-testing
+  - dashboard-builder
   - database-migrations
   - deep-research
   - deployment-patterns
   - design-system
-  - django-patterns
-  - django-security
-  - django-tdd
-  - django-verification
-  - dmux-workflows
   - docker-patterns
   - documentation-lookup
+  - dotnet-patterns
   - e2e-testing
-  - energy-procurement
+  - ecc-guide
   - enterprise-agent-ops
   - error-handling
   - eval-harness
-  - exa-search
-  - fal-ai-media
-  - flutter-dart-code-review
-  - foundation-models-on-device
+  - frontend-design-direction
   - frontend-patterns
-  - frontend-slides
-  - fsharp-testing
+  - gateguard
   - git-workflow
-  - golang-patterns
-  - golang-testing
-  - healthcare-cdss-patterns
-  - healthcare-emr-patterns
-  - healthcare-eval-harness
-  - healthcare-phi-compliance
-  - inventory-demand-planning
-  - investor-materials
-  - investor-outreach
+  - github-ops
+  - hexagonal-architecture
+  - hookify-rules
   - iterative-retrieval
-  - java-coding-standards
-  - jpa-patterns
-  - kotlin-coroutines-flows
-  - kotlin-exposed-patterns
-  - kotlin-ktor-patterns
-  - kotlin-patterns
-  - kotlin-testing
-  - laravel-patterns
-  - laravel-plugin-discovery
-  - laravel-security
-  - laravel-tdd
-  - laravel-verification
-  - liquid-glass-design
-  - logistics-exception-management
-  - market-research
+  - knowledge-ops
+  - make-interfaces-feel-better
   - mcp-server-patterns
+  - motion-advanced
+  - motion-foundations
+  - motion-patterns
   - motion-ui
-  - nanoclaw-repl
   - nextjs-turbopack
-  - nutrient-document-processing
-  - nuxt4-patterns
-  - perl-patterns
-  - perl-security
-  - perl-testing
-  - plankton-code-quality
   - plan-orchestrate
   - postgres-patterns
+  - product-capability
   - product-lens
-  - production-scheduling
+  - production-audit
+  - project-flow-ops
   - prompt-optimizer
-  - python-patterns
-  - python-testing
-  - pytorch-patterns
-  - quality-nonconformance
-  - quarkus-patterns
-  - quarkus-security
-  - quarkus-tdd
-  - quarkus-verification
-  - ralphinho-rfc-pipeline
+  - redis-patterns
   - regex-vs-llm-structured-text
   - repo-scan
-  - returns-reverse-logistics
+  - research-ops
   - rules-distill
-  - rust-patterns
-  - rust-testing
   - safety-guard
-  - santa-method
   - search-first
+  - security-bounty-hunter
   - security-review
   - security-scan
   - skill-comply
+  - skill-scout
   - skill-stocktake
-  - springboot-patterns
-  - springboot-security
-  - springboot-tdd
-  - springboot-verification
   - strategic-compact
-  - swift-actor-persistence
-  - swift-concurrency-6-2
-  - swift-protocol-di-testing
-  - swiftui-patterns
   - tdd-workflow
   - team-builder
+  - terminal-ops
   - token-budget-advisor
+  - ui-demo
+  - unified-notifications-ops
   - verification-loop
-  - video-editing
-  - videodb
-  - visa-doc-translate
-  - x-api
+  - vite-patterns
+  - windows-desktop-e2e
+  - workspace-surface-audit
+
 commands:
   - aside
   - auto-update
@@ -159,22 +111,10 @@ commands:
   - checkpoint
   - code-review
   - cost-report
-  - cpp-build
-  - cpp-review
-  - cpp-test
   - ecc-guide
   - evolve
   - fastapi-review
   - feature-dev
-  - flutter-build
-  - flutter-review
-  - flutter-test
-  - gan-build
-  - gan-design
-  - go-build
-  - go-review
-  - go-test
-  - gradle-build
   - harness-audit
   - hookify
   - hookify-configure
@@ -183,46 +123,33 @@ commands:
   - instinct-export
   - instinct-import
   - instinct-status
-  - jira
-  - kotlin-build
-  - kotlin-review
-  - kotlin-test
   - learn
   - learn-eval
   - loop-start
   - loop-status
   - model-route
-  - multi-backend
   - multi-execute
-  - multi-frontend
   - multi-plan
-  - multi-workflow
   - plan
   - plan-prd
-  - pm2
+  - pr
+  - project-init
   - projects
   - promote
-  - project-init
-  - pr
   - prp-commit
   - prp-implement
   - prp-plan
   - prp-pr
   - prp-prd
   - prune
-  - python-review
   - quality-gate
   - refactor-clean
   - resume-session
   - review-pr
-  - rust-build
-  - rust-review
-  - rust-test
   - santa-loop
   - save-session
   - security-scan
   - sessions
-  - setup-pm
   - skill-create
   - skill-health
   - test-coverage
@@ -231,8 +158,12 @@ commands:
 tags:
   - agent-harness
   - developer-tools
+  - dotnet
+  - aspnet
+  - csharp
+  - reactjs
   - code-review
   - testing
   - security
-  - cross-platform
-  - gitagent
+  - claude-code
+  - github-copilot

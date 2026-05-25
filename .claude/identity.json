@@ -7,8 +7,11 @@
     "explanations": true
   },
   "domains": [
-    "javascript"
+    "csharp",
+    "typescript",
+    "react"
   ],
-  "suggestedBy": "ecc-tools-repo-analysis",
-  "createdAt": "2026-03-20T12:07:57.119Z"
+  "suggestedBy": "manual",
+  "createdAt": "2026-03-20T12:07:57.119Z",
+  "updatedAt": "2026-05-25T00:00:00.000Z"
 }

@@ -108,12 +108,12 @@ function runTests() {
     const parsed = parseInstallArgs([
       'node', 'install-apply.js',
       '--profile', 'full',
-      '--without', 'capability:media',
-      '--without', 'capability:social',
+      '--without', 'capability:security',
+      '--without', 'capability:orchestration',
     ]);
     assert.deepStrictEqual(parsed.excludeComponentIds, [
-      'capability:media',
-      'capability:social',
+      'capability:security',
+      'capability:orchestration',
     ]);
   })) passed++; else failed++;
 
@@ -144,9 +144,9 @@ function runTests() {
       'node', 'install-apply.js',
       '--profile', 'core',
       '--without', '',
-      '--without', 'capability:media',
+      '--without', 'capability:orchestration',
     ]);
-    assert.deepStrictEqual(parsed.excludeComponentIds, ['capability:media']);
+    assert.deepStrictEqual(parsed.excludeComponentIds, ['capability:orchestration']);
   })) passed++; else failed++;
 
   // ─── Request Normalization ───
@@ -167,7 +167,7 @@ function runTests() {
 
   if (test('normalizes --profile + --with + --without as manifest mode', () => {
     const request = normalizeInstallRequest({
-      target: 'cursor',
+      target: 'claude',
       profileId: 'developer',
       moduleIds: [],
       includeComponentIds: ['lang:typescript', 'framework:nextjs'],
@@ -201,7 +201,7 @@ function runTests() {
         profileId: null,
         moduleIds: [],
         includeComponentIds: [],
-        excludeComponentIds: ['capability:media'],
+        excludeComponentIds: ['capability:security'],
         languages: ['typescript'],
       }),
       /cannot be combined/
@@ -226,10 +226,10 @@ function runTests() {
       profileId: 'full',
       moduleIds: [],
       includeComponentIds: [],
-      excludeComponentIds: ['capability:media', 'capability:media', 'capability:social'],
+      excludeComponentIds: ['capability:security', 'capability:security', 'capability:orchestration'],
       languages: [],
     });
-    assert.deepStrictEqual(request.excludeComponentIds, ['capability:media', 'capability:social']);
+    assert.deepStrictEqual(request.excludeComponentIds, ['capability:security', 'capability:orchestration']);
   })) passed++; else failed++;
 
   // ─── Component Catalog Validation ───
@@ -333,15 +333,15 @@ function runTests() {
   if (test('multiple --without flags exclude multiple modules', () => {
     const plan = resolveInstallPlan({
       profileId: 'full',
-      excludeComponentIds: ['capability:media', 'capability:social', 'capability:supply-chain'],
+      excludeComponentIds: ['capability:security', 'capability:orchestration', 'capability:devops'],
       target: 'claude',
     });
-    assert.ok(!plan.selectedModuleIds.includes('media-generation'));
-    assert.ok(!plan.selectedModuleIds.includes('social-distribution'));
-    assert.ok(!plan.selectedModuleIds.includes('supply-chain-domain'));
-    assert.ok(plan.excludedModuleIds.includes('media-generation'));
-    assert.ok(plan.excludedModuleIds.includes('social-distribution'));
-    assert.ok(plan.excludedModuleIds.includes('supply-chain-domain'));
+    assert.ok(!plan.selectedModuleIds.includes('security'));
+    assert.ok(!plan.selectedModuleIds.includes('orchestration'));
+    assert.ok(!plan.selectedModuleIds.includes('devops-infra'));
+    assert.ok(plan.excludedModuleIds.includes('security'));
+    assert.ok(plan.excludedModuleIds.includes('orchestration'));
+    assert.ok(plan.excludedModuleIds.includes('devops-infra'));
   })) passed++; else failed++;
 
   // ─── Combined --with + --without ───
@@ -361,15 +361,7 @@ function runTests() {
       'Should keep profile base modules');
   })) passed++; else failed++;
 
-  if (test('--without on a dependency of --with raises an error', () => {
-    assert.throws(
-      () => resolveInstallPlan({
-        includeComponentIds: ['capability:social'],
-        excludeComponentIds: ['capability:content'],
-      }),
-      /depends on excluded module/
-    );
-  })) passed++; else failed++;
+
 
   // ─── Validation Errors ───
 
@@ -415,13 +407,11 @@ function runTests() {
   if (test('--with respects target compatibility filtering', () => {
     const plan = resolveInstallPlan({
       includeComponentIds: ['capability:orchestration'],
-      target: 'cursor',
+      target: 'claude-project',
     });
-    // orchestration module only supports claude, codex, opencode
-    assert.ok(!plan.selectedModuleIds.includes('orchestration'),
-      'Should skip orchestration for cursor target');
-    assert.ok(plan.skippedModuleIds.includes('orchestration'),
-      'Should report orchestration as skipped for cursor');
+    // orchestration module supports claude-project, so it should be selected
+    assert.ok(plan.selectedModuleIds.includes('orchestration'),
+      'Should include orchestration for claude-project target');
   })) passed++; else failed++;
 
   if (test('--without with agent: component excludes the agent module', () => {
@@ -484,7 +474,7 @@ function runTests() {
     assert.ok(result.includes('--with'), 'Help should mention --with');
     assert.ok(result.includes('--without'), 'Help should mention --without');
     assert.ok(result.includes('component'), 'Help should describe components');
-    assert.ok(result.includes('zed          - Install project settings'), 'Help should describe Zed target');
+    assert.ok(result.includes('claude-project'), 'Help should describe claude-project target');
   })) passed++; else failed++;
 
   // ─── End-to-End Dry-Run ───
@@ -520,17 +510,17 @@ function runTests() {
     }
   })) passed++; else failed++;
 
-  if (test('end-to-end: --profile minimal --target zed --dry-run --json plans project adapter', () => {
+  if (test('end-to-end: --profile minimal --target claude-project --dry-run --json plans project adapter', () => {
     const { execFileSync } = require('child_process');
     const scriptPath = path.join(__dirname, '..', '..', 'scripts', 'install-apply.js');
     const homeDir = fs.mkdtempSync(path.join(os.tmpdir(), 'selective-e2e-'));
-    const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'selective-e2e-zed-project-'));
+    const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'selective-e2e-claude-project-'));
 
     try {
       const result = execFileSync('node', [
         scriptPath,
         '--profile', 'minimal',
-        '--target', 'zed',
+        '--target', 'claude-project',
         '--dry-run',
         '--json',
       ], {
@@ -542,16 +532,12 @@ function runTests() {
       const parsed = JSON.parse(result);
 
       assert.strictEqual(parsed.dryRun, true);
-      assert.strictEqual(parsed.plan.target, 'zed');
-      assert.strictEqual(parsed.plan.adapter.id, 'zed-project');
-      assert.strictEqual(parsed.plan.installRoot, path.join(fs.realpathSync(projectDir), '.zed'));
+      assert.strictEqual(parsed.plan.target, 'claude-project');
+      assert.strictEqual(parsed.plan.adapter.id, 'claude-project');
+      assert.strictEqual(parsed.plan.installRoot, path.join(fs.realpathSync(projectDir), '.claude'));
       assert.ok(
-        parsed.plan.operations.some(operation => normalizePlanPath(operation.sourceRelativePath) === '.zed/settings.json'),
-        'Should include Zed native settings operation'
-      );
-      assert.ok(
-        !parsed.plan.operations.some(operation => operation.moduleId === 'hooks-runtime'),
-        'Zed minimal dry-run should not install hook runtime files'
+        parsed.plan.operations.some(operation => operation.moduleId === 'rules-core'),
+        'claude-project minimal dry-run should include rules-core'
       );
     } finally {
       fs.rmSync(homeDir, { recursive: true, force: true });

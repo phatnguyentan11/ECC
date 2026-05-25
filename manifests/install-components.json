@@ -155,14 +155,6 @@
       ]
     },
     {
-      "id": "capability:content",
-      "family": "capability",
-      "description": "Business, writing, market, investor communication, and reusable voice-system skills.",
-      "modules": [
-        "business-content"
-      ]
-    },
-    {
       "id": "capability:operators",
       "family": "capability",
       "description": "Connected-app operator workflows for setup audits, billing operations, program tracking, Google Workspace, and network optimization.",
@@ -171,35 +163,11 @@
       ]
     },
     {
-      "id": "capability:social",
-      "family": "capability",
-      "description": "Social publishing and distribution skills.",
-      "modules": [
-        "social-distribution"
-      ]
-    },
-    {
-      "id": "capability:media",
-      "family": "capability",
-      "description": "Media generation, technical explainers, and AI-assisted editing skills.",
-      "modules": [
-        "media-generation"
-      ]
-    },
-    {
       "id": "capability:orchestration",
       "family": "capability",
       "description": "Worktree and tmux orchestration runtime and workflow docs.",
       "modules": [
         "orchestration"
-      ]
-    },
-    {
-      "id": "lang:swift",
-      "family": "language",
-      "description": "Swift, SwiftUI, and Apple platform engineering guidance.",
-      "modules": [
-        "swift-apple"
       ]
     },
     {
@@ -308,30 +276,6 @@
       "description": "Deployment, Docker, and infrastructure patterns.",
       "modules": [
         "devops-infra"
-      ]
-    },
-    {
-      "id": "capability:machine-learning",
-      "family": "capability",
-      "description": "Production machine-learning engineering workflows for data contracts, reproducible training, evaluation, deployment, monitoring, and rollback.",
-      "modules": [
-        "machine-learning"
-      ]
-    },
-    {
-      "id": "capability:supply-chain",
-      "family": "capability",
-      "description": "Supply chain, logistics, procurement, and manufacturing domain skills.",
-      "modules": [
-        "supply-chain-domain"
-      ]
-    },
-    {
-      "id": "capability:documents",
-      "family": "capability",
-      "description": "Document processing, conversion, and translation skills.",
-      "modules": [
-        "document-processing"
       ]
     },
     {
@@ -519,75 +463,11 @@
       ]
     },
     {
-      "id": "skill:mle-workflow",
-      "family": "skill",
-      "description": "Production machine-learning engineering workflow for data contracts, reproducible training, evaluation, deployment, monitoring, and rollback.",
-      "modules": [
-        "machine-learning"
-      ]
-    },
-    {
-      "id": "locale:ja",
-      "family": "locale",
-      "description": "Japanese (ja-JP) translated reference docs installed to ~/.claude/docs/ja-JP/.",
-      "modules": [
-        "docs-ja-jp"
-      ]
-    },
-    {
-      "id": "locale:zh-cn",
-      "family": "locale",
-      "description": "Simplified Chinese (zh-CN) translated reference docs installed to ~/.claude/docs/zh-CN/.",
-      "modules": [
-        "docs-zh-cn"
-      ]
-    },
-    {
-      "id": "locale:ko-kr",
-      "family": "locale",
-      "description": "Korean (ko-KR) translated reference docs installed to ~/.claude/docs/ko-KR/.",
-      "modules": [
-        "docs-ko-kr"
-      ]
-    },
-    {
-      "id": "locale:pt-br",
-      "family": "locale",
-      "description": "Brazilian Portuguese (pt-BR) translated reference docs installed to ~/.claude/docs/pt-BR/.",
-      "modules": [
-        "docs-pt-br"
-      ]
-    },
-    {
-      "id": "locale:ru",
-      "family": "locale",
-      "description": "Russian (ru) translated reference docs installed to ~/.claude/docs/ru/.",
-      "modules": [
-        "docs-ru"
-      ]
-    },
-    {
-      "id": "locale:tr",
-      "family": "locale",
-      "description": "Turkish (tr) translated reference docs installed to ~/.claude/docs/tr/.",
-      "modules": [
-        "docs-tr"
-      ]
-    },
-    {
       "id": "locale:vi-vn",
       "family": "locale",
       "description": "Vietnamese (vi-VN) translated reference docs installed to ~/.claude/docs/vi-VN/.",
       "modules": [
         "docs-vi-vn"
-      ]
-    },
-    {
-      "id": "locale:zh-tw",
-      "family": "locale",
-      "description": "Traditional Chinese (zh-TW) translated reference docs installed to ~/.claude/docs/zh-TW/.",
-      "modules": [
-        "docs-zh-tw"
       ]
     }
   ]

@@ -2577,7 +2577,11 @@ function runTests() {
     fs.mkdirSync(validSkill, { recursive: true });
     // Broken symlink: target does not exist — statSync will throw ENOENT
     const brokenLink = path.join(skillsDir, 'broken-skill');
-    fs.symlinkSync('/nonexistent/target/path', brokenLink);
+    try {
+      fs.symlinkSync('/nonexistent/target/path', brokenLink);
+    } catch (symlinkErr) {
+      // Skip symlink creation on systems where it is not permitted (e.g. Windows without elevation)
+    }
 
     // Command that references the valid skill (should resolve)
     fs.writeFileSync(path.join(testDir, 'cmd.md'),

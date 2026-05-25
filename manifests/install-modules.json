@@ -10,13 +10,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -28,20 +22,12 @@
       "kind": "agents",
       "description": "Agent definitions and project-level agent guidance.",
       "paths": [
-        ".agents",
         "agents",
         "AGENTS.md"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -57,14 +43,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -82,10 +61,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "opencode",
-        "codebuddy"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -97,29 +73,13 @@
       "kind": "platform",
       "description": "Baseline platform configs, package-manager setup, and MCP catalog.",
       "paths": [
-        ".claude-plugin",
-        ".codex",
-        ".cursor",
-        ".gemini",
-        ".opencode",
-        ".qwen",
-        ".zed",
         "mcp-configs",
         "scripts/auto-update.js",
         "scripts/setup-package-manager.js"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "gemini",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -131,66 +91,20 @@
       "kind": "skills",
       "description": "Core framework, language, and application-engineering skills.",
       "paths": [
-        "skills/android-clean-architecture",
-        "skills/angular-developer",
         "skills/api-design",
         "skills/backend-patterns",
         "skills/coding-standards",
-        "skills/compose-multiplatform-patterns",
         "skills/csharp-testing",
-        "skills/fsharp-testing",
-        "skills/cpp-coding-standards",
-        "skills/cpp-testing",
-        "skills/dart-flutter-patterns",
-        "skills/django-patterns",
-        "skills/django-tdd",
-        "skills/django-verification",
         "skills/dotnet-patterns",
-        "skills/fastapi-patterns",
         "skills/frontend-design-direction",
         "skills/frontend-patterns",
-        "skills/frontend-slides",
         "skills/make-interfaces-feel-better",
         "skills/motion-ui",
-        "skills/golang-patterns",
-        "skills/golang-testing",
-        "skills/java-coding-standards",
-        "skills/kotlin-coroutines-flows",
-        "skills/kotlin-exposed-patterns",
-        "skills/kotlin-ktor-patterns",
-        "skills/kotlin-patterns",
-        "skills/kotlin-testing",
-        "skills/laravel-plugin-discovery",
-        "skills/laravel-patterns",
-        "skills/laravel-tdd",
-        "skills/laravel-verification",
-        "skills/mcp-server-patterns",
-        "skills/nestjs-patterns",
-        "skills/perl-patterns",
-        "skills/perl-testing",
-        "skills/python-patterns",
-        "skills/python-testing",
-        "skills/quarkus-patterns",
-        "skills/quarkus-tdd",
-        "skills/quarkus-verification",
-        "skills/rust-patterns",
-        "skills/rust-testing",
-        "skills/springboot-patterns",
-        "skills/springboot-tdd",
-        "skills/springboot-verification",
-        "skills/ui-to-vue"
+        "skills/mcp-server-patterns"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "rules-core",
@@ -207,24 +121,13 @@
       "kind": "skills",
       "description": "Database and persistence-focused skills.",
       "paths": [
-        "skills/clickhouse-io",
         "skills/database-migrations",
-        "skills/jpa-patterns",
-        "skills/mysql-patterns",
         "skills/postgres-patterns",
-        "skills/prisma-patterns"
+        "skills/redis-patterns"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -236,7 +139,7 @@
     {
       "id": "workflow-quality",
       "kind": "skills",
-      "description": "Evaluation, TDD, verification, compaction, and learning skills, including the legacy continuous-learning v1 path.",
+      "description": "Evaluation, TDD, verification, compaction, and learning skills.",
       "paths": [
         "skills/agent-sort",
         "skills/agent-introspection-debugging",
@@ -251,7 +154,6 @@
         "skills/eval-harness",
         "skills/hookify-rules",
         "skills/iterative-retrieval",
-        "skills/plankton-code-quality",
         "skills/production-audit",
         "skills/skill-scout",
         "skills/skill-stocktake",
@@ -262,15 +164,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -284,33 +178,14 @@
       "kind": "skills",
       "description": "Security review and security-focused framework guidance.",
       "paths": [
-        "skills/defi-amm-security",
-        "skills/django-security",
-        "skills/healthcare-phi-compliance",
-        "skills/hipaa-compliance",
-        "skills/laravel-security",
-        "skills/llm-trading-agent-security",
-        "skills/nodejs-keccak256",
-        "skills/perl-security",
-        "skills/quarkus-security",
         "skills/security-review",
         "skills/security-scan",
         "skills/security-bounty-hunter",
-        "skills/springboot-security",
-        "skills/evm-token-decimals",
         "the-security-guide.md"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "workflow-quality"
@@ -322,28 +197,14 @@
     {
       "id": "research-apis",
       "kind": "skills",
-      "description": "Research and API integration skills for deep investigations and model integrations.",
+      "description": "Research and deep investigation skills.",
       "paths": [
         "skills/deep-research",
-        "skills/exa-search",
-        "skills/research-ops",
-        "skills/scientific-db-pubmed-database",
-        "skills/scientific-db-uspto-database",
-        "skills/scientific-pkg-gget",
-        "skills/scientific-thinking-literature-review",
-        "skills/scientific-thinking-scholar-evaluation"
+        "skills/research-ops"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -353,59 +214,15 @@
       "stability": "stable"
     },
     {
-      "id": "business-content",
-      "kind": "skills",
-      "description": "Business, writing, market, and investor communication skills.",
-      "paths": [
-        "skills/article-writing",
-        "skills/brand-voice",
-        "skills/content-engine",
-        "skills/investor-materials",
-        "skills/investor-outreach",
-        "skills/lead-intelligence",
-        "skills/product-capability",
-        "skills/social-graph-ranker",
-        "skills/seo",
-        "skills/market-research"
-      ],
-      "targets": [
-        "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
-      ],
-      "dependencies": [
-        "platform-configs"
-      ],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
       "id": "operator-workflows",
       "kind": "skills",
-      "description": "Connected-app operator workflows for setup audits, billing operations, program tracking, Google Workspace, and network optimization.",
+      "description": "Connected-app operator workflows for GitHub, dashboards, knowledge, and workspace operations.",
       "paths": [
-        "skills/automation-audit-ops",
         "skills/api-connector-builder",
-        "skills/connections-optimizer",
         "skills/cost-tracking",
-        "skills/customer-billing-ops",
         "skills/dashboard-builder",
-        "skills/ecc-tools-cost-audit",
-        "skills/email-ops",
-        "skills/finance-billing-ops",
         "skills/github-ops",
-        "skills/google-workspace-ops",
-        "skills/jira-integration",
         "skills/knowledge-ops",
-        "skills/messages-ops",
         "skills/project-flow-ops",
         "skills/terminal-ops",
         "skills/unified-notifications-ops",
@@ -413,15 +230,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -429,123 +238,6 @@
       "defaultInstall": false,
       "cost": "medium",
       "stability": "beta"
-    },
-    {
-      "id": "social-distribution",
-      "kind": "skills",
-      "description": "Social publishing and distribution skills.",
-      "paths": [
-        "skills/crosspost",
-        "skills/x-api"
-      ],
-      "targets": [
-        "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
-      ],
-      "dependencies": [
-        "business-content"
-      ],
-      "defaultInstall": false,
-      "cost": "medium",
-      "stability": "stable"
-    },
-    {
-      "id": "media-generation",
-      "kind": "skills",
-      "description": "Media generation, technical explainers, and AI-assisted editing skills.",
-      "paths": [
-        "skills/blender-motion-state-inspection",
-        "skills/fal-ai-media",
-        "skills/manim-video",
-        "skills/remotion-video-creation",
-        "skills/ui-demo",
-        "skills/video-editing",
-        "skills/videodb"
-      ],
-      "targets": [
-        "claude",
-        "claude-project",
-        "cursor",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
-      ],
-      "dependencies": [
-        "platform-configs"
-      ],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "beta"
-    },
-    {
-      "id": "orchestration",
-      "kind": "orchestration",
-      "description": "Worktree/tmux orchestration runtime and workflow docs.",
-      "paths": [
-        "commands/multi-workflow.md",
-        "commands/sessions.md",
-        "scripts/lib/orchestration-session.js",
-        "scripts/lib/tmux-worktree-orchestrator.js",
-        "scripts/orchestrate-codex-worker.sh",
-        "scripts/orchestrate-worktrees.js",
-        "scripts/orchestration-status.js",
-        "skills/dmux-workflows"
-      ],
-      "targets": [
-        "claude",
-        "claude-project",
-        "codex",
-        "opencode"
-      ],
-      "dependencies": [
-        "commands-core",
-        "platform-configs"
-      ],
-      "defaultInstall": false,
-      "cost": "medium",
-      "stability": "beta"
-    },
-    {
-      "id": "swift-apple",
-      "kind": "skills",
-      "description": "Swift, SwiftUI, and Apple platform skills including concurrency, persistence, and design patterns.",
-      "paths": [
-        "skills/foundation-models-on-device",
-        "skills/liquid-glass-design",
-        "skills/swift-actor-persistence",
-        "skills/swift-concurrency-6-2",
-        "skills/swift-protocol-di-testing",
-        "skills/swiftui-patterns"
-      ],
-      "targets": [
-        "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
-      ],
-      "dependencies": [
-        "platform-configs"
-      ],
-      "defaultInstall": false,
-      "cost": "medium",
-      "stability": "stable"
     },
     {
       "id": "agentic-patterns",
@@ -563,11 +255,8 @@
         "skills/content-hash-cache-pattern",
         "skills/continuous-agent-loop",
         "skills/cost-aware-llm-pipeline",
-        "skills/data-scraper-agent",
         "skills/enterprise-agent-ops",
-        "skills/nanoclaw-repl",
         "skills/prompt-optimizer",
-        "skills/ralphinho-rfc-pipeline",
         "skills/regex-vs-llm-structured-text",
         "skills/search-first",
         "skills/token-budget-advisor",
@@ -575,15 +264,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -595,29 +276,14 @@
     {
       "id": "devops-infra",
       "kind": "skills",
-      "description": "Deployment workflows, Docker patterns, and infrastructure skills.",
+      "description": "Deployment workflows and Docker patterns.",
       "paths": [
-        "skills/cisco-ios-patterns",
         "skills/deployment-patterns",
-        "skills/docker-patterns",
-        "skills/homelab-network-readiness",
-        "skills/homelab-network-setup",
-        "skills/netmiko-ssh-automation",
-        "skills/network-bgp-diagnostics",
-        "skills/network-config-validation",
-        "skills/network-interface-health"
+        "skills/docker-patterns"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -627,213 +293,34 @@
       "stability": "stable"
     },
     {
-      "id": "machine-learning",
-      "kind": "skills",
-      "description": "Production machine-learning engineering workflows for data contracts, reproducible training, evaluation, deployment, monitoring, and rollback.",
+      "id": "orchestration",
+      "kind": "orchestration",
+      "description": "Worktree/tmux orchestration runtime and workflow docs.",
       "paths": [
-        "skills/mle-workflow"
+        "commands/sessions.md",
+        "scripts/lib/orchestration-session.js",
+        "scripts/lib/tmux-worktree-orchestrator.js",
+        "scripts/orchestrate-worktrees.js",
+        "scripts/orchestration-status.js"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
-        "framework-language",
-        "workflow-quality",
-        "database",
-        "devops-infra",
-        "security"
+        "commands-core",
+        "platform-configs"
       ],
       "defaultInstall": false,
       "cost": "medium",
       "stability": "beta"
     },
     {
-      "id": "supply-chain-domain",
-      "kind": "skills",
-      "description": "Supply chain, logistics, procurement, and manufacturing domain skills.",
-      "paths": [
-        "skills/carrier-relationship-management",
-        "skills/customs-trade-compliance",
-        "skills/energy-procurement",
-        "skills/inventory-demand-planning",
-        "skills/logistics-exception-management",
-        "skills/production-scheduling",
-        "skills/quality-nonconformance",
-        "skills/returns-reverse-logistics"
-      ],
-      "targets": [
-        "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
-      ],
-      "dependencies": [
-        "platform-configs"
-      ],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
-      "id": "document-processing",
-      "kind": "skills",
-      "description": "Document processing, conversion, and translation skills.",
-      "paths": [
-        "skills/nutrient-document-processing",
-        "skills/visa-doc-translate"
-      ],
-      "targets": [
-        "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
-      ],
-      "dependencies": [
-        "platform-configs"
-      ],
-      "defaultInstall": false,
-      "cost": "medium",
-      "stability": "stable"
-    },
-    {
-      "id": "docs-ja-jp",
-      "kind": "docs",
-      "description": "Japanese (ja-JP) translated reference docs for agents, commands, skills, and rules.",
-      "paths": [
-        "docs/ja-JP"
-      ],
-      "targets": [
-        "claude",
-        "claude-project"
-      ],
-      "dependencies": [],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
-      "id": "docs-zh-cn",
-      "kind": "docs",
-      "description": "Simplified Chinese (zh-CN) translated reference docs for agents, commands, skills, and rules.",
-      "paths": [
-        "docs/zh-CN"
-      ],
-      "targets": [
-        "claude",
-        "claude-project"
-      ],
-      "dependencies": [],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
-      "id": "docs-ko-kr",
-      "kind": "docs",
-      "description": "Korean (ko-KR) translated reference docs for agents, commands, skills, and rules.",
-      "paths": [
-        "docs/ko-KR"
-      ],
-      "targets": [
-        "claude",
-        "claude-project"
-      ],
-      "dependencies": [],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
-      "id": "docs-pt-br",
-      "kind": "docs",
-      "description": "Brazilian Portuguese (pt-BR) translated reference docs for agents, commands, skills, and rules.",
-      "paths": [
-        "docs/pt-BR"
-      ],
-      "targets": [
-        "claude",
-        "claude-project"
-      ],
-      "dependencies": [],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
-      "id": "docs-ru",
-      "kind": "docs",
-      "description": "Russian (ru) translated reference docs for agents, commands, skills, and rules.",
-      "paths": [
-        "docs/ru"
-      ],
-      "targets": [
-        "claude",
-        "claude-project"
-      ],
-      "dependencies": [],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
-      "id": "docs-tr",
-      "kind": "docs",
-      "description": "Turkish (tr) translated reference docs for agents, commands, skills, and rules.",
-      "paths": [
-        "docs/tr"
-      ],
-      "targets": [
-        "claude",
-        "claude-project"
-      ],
-      "dependencies": [],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
       "id": "docs-vi-vn",
       "kind": "docs",
-      "description": "Vietnamese (vi-VN) translated reference docs for agents, commands, skills, and rules.",
+      "description": "Vietnamese (vi-VN) translated reference docs.",
       "paths": [
         "docs/vi-VN"
-      ],
-      "targets": [
-        "claude",
-        "claude-project"
-      ],
-      "dependencies": [],
-      "defaultInstall": false,
-      "cost": "heavy",
-      "stability": "stable"
-    },
-    {
-      "id": "docs-zh-tw",
-      "kind": "docs",
-      "description": "Traditional Chinese (zh-TW) translated reference docs for agents, commands, skills, and rules.",
-      "paths": [
-        "docs/zh-TW"
       ],
       "targets": [
         "claude",

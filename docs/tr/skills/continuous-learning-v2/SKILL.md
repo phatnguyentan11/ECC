@@ -1,56 +1,57 @@
 ---
 name: continuous-learning-v2
-description: Hook'lar aracılığıyla oturumları gözlemleyen, güven skorlaması ile atomik instinct'ler oluşturan ve bunları skill/command/agent'lara evriltiren instinct tabanlı öğrenme sistemi. v2.1 çapraz proje kontaminasyonunu önlemek için proje kapsamlı instinct'ler ekler.
+description: Instinct-based learning system that observes sessions via hooks, creates atomic instincts with confidence scoring, and evolves them into skills/commands/agents. v2.1 adds project-scoped instincts to prevent cross-project contamination.
 origin: ECC
 version: 2.1.0
 ---
 
-# Sürekli Öğrenme v2.1 - Instinct Tabanlı Mimari
+# Continuous Learning v2.1 - Instinct
+-Based Architecture
 
-Claude Code oturumlarınızı güven skorlaması ile atomik "instinct'ler" - küçük öğrenilmiş davranışlar - aracılığıyla yeniden kullanılabilir bilgiye dönüştüren gelişmiş bir öğrenme sistemi.
+An advanced learning system that turns your Claude Code sessions into reusable knowledge through atomic "instincts" - small learned behaviors with confidence scoring.
 
-**v2.1** **proje kapsamlı instinct'ler** ekler — React kalıpları React projenizde kalır, Python kuralları Python projenizde kalır ve evrensel kalıplar (örneğin "her zaman input'u doğrula") global olarak paylaşılır.
+**v2.1** adds **project-scoped instincts** — React patterns stay in your React project, Python conventions stay in your Python project, and universal patterns (like "always validate input") are shared globally.
 
-## Ne Zaman Aktifleştirmelisiniz
+## When to Activate
 
-- Claude Code oturumlarından otomatik öğrenme ayarlarken
-- Hook'lar aracılığıyla instinct tabanlı davranış çıkarmayı yapılandırırken
-- Öğrenilmiş davranışlar için güven eşiklerini ayarlarken
-- Instinct kütüphanelerini incelerken, dışa veya içe aktarırken
-- Instinct'leri tam skill'lere, command'lara veya agent'lara evriltirken
-- Proje kapsamlı vs global instinct'leri yönetirken
-- Instinct'leri projeden global kapsamına yükseltirken
+- Setting up automatic learning from Claude Code sessions
+- Configuring instinct-based behavior extraction via hooks
+- Tuning confidence thresholds for learned behaviors
+- Reviewing, exporting, or importing instinct libraries
+- Evolving instincts into full skills, commands, or agents
+- Managing project-scoped vs global instincts
+- Promoting instincts from project to global scope
 
-## v2.1'deki Yenilikler
+## What's New in v2.1
 
-| Özellik | v2.0 | v2.1 |
+| Feature | v2.0 | v2.1 |
 |---------|------|------|
-| Depolama | Global (~/.claude/homunculus/) | Proje kapsamlı (projects/<hash>/) |
-| Kapsam | Tüm instinct'ler her yerde geçerli | Proje kapsamlı + global |
-| Tespit | Yok | git remote URL / repo path |
-| Yükseltme | Yok | Proje → 2+ projede görülünce global |
-| Komutlar | 4 (status/evolve/export/import) | 6 (+promote/projects) |
-| Çapraz proje | Kontaminasyon riski | Varsayılan olarak izole |
+| Storage | Global (`~/.claude/homunculus/`) | Project-scoped (`${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/projects/<hash>/`) |
+| Scope | All instincts apply everywhere | Project-scoped + global |
+| Detection | None | git remote URL / repo path |
+| Promotion | N/A | Project → global when seen in 2+ projects |
+| Commands | 4 (status/evolve/export/import) | 6 (+promote/projects) |
+| Cross-project | Contamination risk | Isolated by default |
 
-## v2'deki Yenilikler (vs v1)
+## What's New in v2 (vs v1)
 
-| Özellik | v1 | v2 |
+| Feature | v1 | v2 |
 |---------|----|----|
-| Gözlem | Stop hook (oturum sonu) | PreToolUse/PostToolUse (%100 güvenilir) |
-| Analiz | Ana bağlam | Arka plan agent'ı (Haiku) |
-| Granülerlik | Tam skill'ler | Atomik "instinct'ler" |
-| Güven | Yok | 0.3-0.9 ağırlıklı |
-| Evrim | Doğrudan skill'e | Instinct'ler -> kümeleme -> skill/command/agent |
-| Paylaşım | Yok | Instinct'leri dışa/içe aktar |
+| Observation | Stop hook (session end) | PreToolUse/PostToolUse (100% reliable) |
+| Analysis | Main context | Background agent (Haiku) |
+| Granularity | Full skills | Atomic "instincts" |
+| Confidence | None | 0.3-0.9 weighted |
+| Evolution | Direct to skill | Instincts -> cluster -> skill/command/agent |
+| Sharing | None | Export/import instincts |
 
-## Instinct Modeli
+## The Instinct Model
 
-Instinct küçük öğrenilmiş bir davranıştır:
+An instinct is a small learned behavior:
 
 ```yaml
 ---
 id: prefer-functional-style
-trigger: "yeni fonksiyonlar yazarken"
+trigger: "when writing new functions"
 confidence: 0.7
 domain: "code-style"
 source: "session-observation"
@@ -59,47 +60,47 @@ project_id: "a1b2c3d4e5f6"
 project_name: "my-react-app"
 ---
 
-# Fonksiyonel Stili Tercih Et
+# Prefer Functional Style
 
-## Aksiyon
-Uygun olduğunda sınıflar yerine fonksiyonel kalıpları kullan.
+## Action
+Use functional patterns over classes when appropriate.
 
-## Kanıt
-- 5 fonksiyonel kalıp tercihinin gözlemlenmesi
-- Kullanıcı 2025-01-15'te sınıf tabanlı yaklaşımı fonksiyonele düzeltti
+## Evidence
+- Observed 5 instances of functional pattern preference
+- User corrected class-based approach to functional on 2025-01-15
 ```
 
-**Özellikler:**
-- **Atomik** -- bir tetikleyici, bir aksiyon
-- **Güven ağırlıklı** -- 0.3 = geçici, 0.9 = neredeyse kesin
-- **Alan etiketli** -- code-style, testing, git, debugging, workflow, vb.
-- **Kanıt destekli** -- hangi gözlemlerin oluşturduğunu takip eder
-- **Kapsam farkında** -- `project` (varsayılan) veya `global`
+**Properties:**
+- **Atomic** -- one trigger, one action
+- **Confidence-weighted** -- 0.3 = tentative, 0.9 = near certain
+- **Domain-tagged** -- code-style, testing, git, debugging, workflow, etc.
+- **Evidence-backed** -- tracks what observations created it
+- **Scope-aware** -- `project` (default) or `global`
 
-## Nasıl Çalışır
+## How It Works
 
 ```
-Oturum Aktivitesi (bir git repo'sunda)
+Session Activity (in a git repo)
       |
-      | Hook'lar prompt'ları + tool kullanımını yakalar (%100 güvenilir)
-      | + proje bağlamını tespit eder (git remote / repo path)
+      | Hooks capture prompts + tool use (100% reliable)
+      | + detect project context (git remote / repo path)
       v
 +---------------------------------------------+
 |  projects/<project-hash>/observations.jsonl  |
-|   (prompt'lar, tool çağrıları, sonuçlar, proje)   |
+|   (prompts, tool calls, outcomes, project)   |
 +---------------------------------------------+
       |
-      | Gözlemci agent okur (arka plan, Haiku)
+      | Observer agent reads (background, Haiku)
       v
 +---------------------------------------------+
-|          KALIP TESPİTİ                      |
-|   * Kullanıcı düzeltmeleri -> instinct      |
-|   * Hata çözümleri -> instinct              |
-|   * Tekrarlanan iş akışları -> instinct     |
-|   * Kapsam kararı: project mi global mi?   |
+|          PATTERN DETECTION                   |
+|   * User corrections -> instinct             |
+|   * Error resolutions -> instinct            |
+|   * Repeated workflows -> instinct           |
+|   * Scope decision: project or global?       |
 +---------------------------------------------+
       |
-      | Oluşturur/günceller
+      | Creates/updates
       v
 +---------------------------------------------+
 |  projects/<project-hash>/instincts/personal/ |
@@ -111,10 +112,10 @@ Oturum Aktivitesi (bir git repo'sunda)
 |   * grep-before-edit.yaml (0.6) [global]     |
 +---------------------------------------------+
       |
-      | /evolve kümeleme + /promote
+      | /evolve clusters + /promote
       v
 +---------------------------------------------+
-|  projects/<hash>/evolved/ (proje kapsamlı)   |
+|  projects/<hash>/evolved/ (project-scoped)   |
 |  evolved/ (global)                           |
 |   * commands/new-feature.md                  |
 |   * skills/testing-workflow.md               |
@@ -122,30 +123,42 @@ Oturum Aktivitesi (bir git repo'sunda)
 +---------------------------------------------+
 ```
 
-## Proje Tespiti
+## Project Detection
 
-Sistem mevcut projenizi otomatik olarak tespit eder:
+The system automatically detects your current project:
 
-1. **`CLAUDE_PROJECT_DIR` env var** (en yüksek öncelik)
-2. **`git remote get-url origin`** -- taşınabilir proje ID'si oluşturmak için hash'lenir (farklı makinelerde aynı repo aynı ID'yi alır)
-3. **`git rev-parse --show-toplevel`** -- repo path kullanan yedek (makineye özgü)
-4. **Global yedek** -- proje tespit edilemezse, instinct'ler global kapsamına gider
+1. **`CLAUDE_PROJECT_DIR` env var** (highest priority)
+2. **`git remote get-url origin`** -- hashed to create a portable project ID (same repo on different machines gets the same ID)
+3. **`git rev-parse --show-toplevel`** -- fallback using repo path (machine-specific)
+4. **Global fallback** -- if no project is detected, instincts go to global scope
 
-Her proje 12 karakterlik bir hash ID alır (örn. `a1b2c3d4e5f6`). `~/.claude/homunculus/projects.json` dosyasındaki kayıt dosyası ID'leri insanların okuyabileceği isimlerle eşler.
+Each project gets a 12-character hash ID (e.g., `a1b2c3d4e5f6`). A registry file at `${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/projects.json` maps IDs to human-readable names.
 
-## Hızlı Başlangıç
+### Data Directory
 
-### 1. Gözlem Hook'larını Aktifleştirin
+Continuous-learning-v2 stores observer data outside `~/.claude` so Claude Code's sensitive-path guard does not block background instinct writes:
 
-`~/.claude/settings.json` dosyanıza ekleyin.
+1. `CLV2_HOMUNCULUS_DIR` when set to an absolute path
+2. `$XDG_DATA_HOME/ecc-homunculus`
+3. `$HOME/.local/share/ecc-homunculus`
 
-**Plugin olarak kuruluysa** (önerilen):
+Existing users with data at `~/.claude/homunculus` can migrate once:
 
-`~/.claude/settings.json` içine ek hook bloğu eklemeyin. Claude Code v2.1+ eklentinin `hooks/hooks.json` dosyasını otomatik yükler; `observe.sh` zaten orada kayıtlıdır.
+```bash
+bash skills/continuous-learning-v2/scripts/migrate-homunculus.sh
+```
 
-Daha önce `observe.sh` satırlarını `~/.claude/settings.json` içine kopyaladıysanız, yinelenen `PreToolUse` / `PostToolUse` bloğunu kaldırın. Yinelenen kayıt hem çift çalıştırmaya yol açar hem de `${CLAUDE_PLUGIN_ROOT}` çözümleme hatası üretir; bu değişken yalnızca eklentiye ait `hooks/hooks.json` girdilerinde genişletilir.
+## Quick Start
 
-**`~/.claude/skills` dizinine manuel kuruluysa**, aşağıdakini `~/.claude/settings.json` içine ekleyin:
+### 1. Enable Observation Hooks
+
+**If installed as a plugin** (recommended):
+
+No extra `settings.json` hook block is required. Claude Code v2.1+ auto-loads the plugin `hooks/hooks.json`, and `observe.sh` is already registered there.
+
+If you previously copied `observe.sh` into `~/.claude/settings.json`, remove that duplicate `PreToolUse` / `PostToolUse` block. Duplicating the plugin hook causes double execution and `${CLAUDE_PLUGIN_ROOT}` resolution errors because that variable is only available inside plugin-managed `hooks/hooks.json` entries.
+
+**If installed manually** to `~/.claude/skills`, add this to your `~/.claude/settings.json`:
 
 ```json
 {
@@ -168,42 +181,42 @@ Daha önce `observe.sh` satırlarını `~/.claude/settings.json` içine kopyalad
 }
 ```
 
-### 2. Dizin Yapısını Başlatın
+### 2. Initialize Directory Structure
 
-Sistem ilk kullanımda dizinleri otomatik oluşturur, ancak manuel olarak da oluşturabilirsiniz:
-
-```bash
-# Global dizinler
-mkdir -p ~/.claude/homunculus/{instincts/{personal,inherited},evolved/{agents,skills,commands},projects}
-
-# Proje dizinleri hook bir git repo'sunda ilk çalıştığında otomatik oluşturulur
-```
-
-### 3. Instinct Komutlarını Kullanın
+The system creates directories automatically on first use, but you can also create them manually:
 
 ```bash
-/instinct-status     # Öğrenilmiş instinct'leri göster (proje + global)
-/evolve              # İlgili instinct'leri skill/command'lara kümele
-/instinct-export     # Instinct'leri dosyaya aktar
-/instinct-import     # Başkalarından instinct'leri içe aktar
-/promote             # Proje instinct'lerini global kapsamına yükselt
-/projects            # Tüm bilinen projeleri ve instinct sayılarını listele
+# Global directories
+mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/ecc-homunculus"/{instincts/{personal,inherited},evolved/{agents,skills,commands},projects}
+
+# Project directories are auto-created when the hook first runs in a git repo
 ```
 
-## Komutlar
+### 3. Use the Instinct Commands
 
-| Komut | Açıklama |
+```bash
+/instinct-status     # Show learned instincts (project + global)
+/evolve              # Cluster related instincts into skills/commands
+/instinct-export     # Export instincts to file
+/instinct-import     # Import instincts from others
+/promote             # Promote project instincts to global scope
+/projects            # List all known projects and their instinct counts
+```
+
+## Commands
+
+| Command | Description |
 |---------|-------------|
-| `/instinct-status` | Tüm instinct'leri göster (proje kapsamlı + global) güvenle |
-| `/evolve` | İlgili instinct'leri skill/command'lara kümele, yükseltme öner |
-| `/instinct-export` | Instinct'leri dışa aktar (kapsam/alana göre filtrelenebilir) |
-| `/instinct-import <file>` | Kapsam kontrolü ile instinct'leri içe aktar |
-| `/promote [id]` | Proje instinct'lerini global kapsamına yükselt |
-| `/projects` | Tüm bilinen projeleri ve instinct sayılarını listele |
+| `/instinct-status` | Show all instincts (project-scoped + global) with confidence |
+| `/evolve` | Cluster related instincts into skills/commands, suggest promotions |
+| `/instinct-export` | Export instincts (filterable by scope/domain) |
+| `/instinct-import <file>` | Import instincts with scope control |
+| `/promote [id]` | Promote project instincts to global scope |
+| `/projects` | List all known projects and their instinct counts |
 
-## Konfigürasyon
+## Configuration
 
-Arka plan gözlemcisini kontrol etmek için `config.json` dosyasını düzenleyin:
+Edit `config.json` to control the background observer:
 
 ```json
 {
@@ -216,132 +229,132 @@ Arka plan gözlemcisini kontrol etmek için `config.json` dosyasını düzenleyi
 }
 ```
 
-| Anahtar | Varsayılan | Açıklama |
+| Key | Default | Description |
 |-----|---------|-------------|
-| `observer.enabled` | `false` | Arka plan gözlemci agent'ını aktifleştir |
-| `observer.run_interval_minutes` | `5` | Gözlemcinin gözlemleri ne sıklıkla analiz ettiği |
-| `observer.min_observations_to_analyze` | `20` | Analiz çalışmadan önce minimum gözlem |
+| `observer.enabled` | `false` | Enable the background observer agent |
+| `observer.run_interval_minutes` | `5` | How often the observer analyzes observations |
+| `observer.min_observations_to_analyze` | `20` | Minimum observations before analysis runs |
 
-Diğer davranışlar (gözlem yakalama, instinct eşikleri, proje kapsamı, yükseltme kriterleri) `instinct-cli.py` ve `observe.sh` içindeki kod varsayılanları aracılığıyla yapılandırılır.
+Other behavior (observation capture, instinct thresholds, project scoping, promotion criteria) is configured via code defaults in `instinct-cli.py` and `observe.sh`.
 
-## Dosya Yapısı
+## File Structure
 
 ```
-~/.claude/homunculus/
-+-- identity.json           # Profiliniz, teknik seviye
-+-- projects.json           # Kayıt: proje hash -> isim/path/remote
-+-- observations.jsonl      # Global gözlemler (yedek)
+${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/
++-- identity.json           # Your profile, technical level
++-- projects.json           # Registry: project hash -> name/path/remote
++-- observations.jsonl      # Global observations (fallback)
 +-- instincts/
-|   +-- personal/           # Global otomatik öğrenilmiş instinct'ler
-|   +-- inherited/          # Global içe aktarılan instinct'ler
+|   +-- personal/           # Global auto-learned instincts
+|   +-- inherited/          # Global imported instincts
 +-- evolved/
-|   +-- agents/             # Global oluşturulan agent'lar
-|   +-- skills/             # Global oluşturulan skill'ler
-|   +-- commands/           # Global oluşturulan komutlar
+|   +-- agents/             # Global generated agents
+|   +-- skills/             # Global generated skills
+|   +-- commands/           # Global generated commands
 +-- projects/
-    +-- a1b2c3d4e5f6/       # Proje hash (git remote URL'den)
-    |   +-- project.json    # Proje başına metadata yansıması (id/name/root/remote)
+    +-- a1b2c3d4e5f6/       # Project hash (from git remote URL)
+    |   +-- project.json    # Per-project metadata mirror (id/name/root/remote)
     |   +-- observations.jsonl
     |   +-- observations.archive/
     |   +-- instincts/
-    |   |   +-- personal/   # Projeye özgü otomatik öğrenilmiş
-    |   |   +-- inherited/  # Projeye özgü içe aktarılan
+    |   |   +-- personal/   # Project-specific auto-learned
+    |   |   +-- inherited/  # Project-specific imported
     |   +-- evolved/
     |       +-- skills/
     |       +-- commands/
     |       +-- agents/
-    +-- f6e5d4c3b2a1/       # Başka bir proje
+    +-- f6e5d4c3b2a1/       # Another project
         +-- ...
 ```
 
-## Kapsam Karar Kılavuzu
+## Scope Decision Guide
 
-| Kalıp Tipi | Kapsam | Örnekler |
+| Pattern Type | Scope | Examples |
 |-------------|-------|---------|
-| Dil/framework kuralları | **project** | "React hook'ları kullan", "Django REST kalıplarını takip et" |
-| Dosya yapısı tercihleri | **project** | "Testler `__tests__`/ içinde", "Bileşenler src/components/ içinde" |
-| Kod stili | **project** | "Fonksiyonel stil kullan", "Dataclass'ları tercih et" |
-| Hata işleme stratejileri | **project** | "Hatalar için Result tipi kullan" |
-| Güvenlik uygulamaları | **global** | "Kullanıcı input'unu doğrula", "SQL'i sanitize et" |
-| Genel en iyi uygulamalar | **global** | "Önce testleri yaz", "Her zaman hataları işle" |
-| Tool iş akışı tercihleri | **global** | "Edit'ten önce Grep", "Write'tan önce Read" |
-| Git uygulamaları | **global** | "Conventional commit'ler", "Küçük odaklı commit'ler" |
+| Language/framework conventions | **project** | "Use React hooks", "Follow Django REST patterns" |
+| File structure preferences | **project** | "Tests in `__tests__`/", "Components in src/components/" |
+| Code style | **project** | "Use functional style", "Prefer dataclasses" |
+| Error handling strategies | **project** | "Use Result type for errors" |
+| Security practices | **global** | "Validate user input", "Sanitize SQL" |
+| General best practices | **global** | "Write tests first", "Always handle errors" |
+| Tool workflow preferences | **global** | "Grep before Edit", "Read before Write" |
+| Git practices | **global** | "Conventional commits", "Small focused commits" |
 
-## Instinct Yükseltme (Project -> Global)
+## Instinct Promotion (Project -> Global)
 
-Aynı instinct birden fazla projede yüksek güvenle göründüğünde, global kapsamına yükseltme adayıdır.
+When the same instinct appears in multiple projects with high confidence, it's a candidate for promotion to global scope.
 
-**Otomatik yükseltme kriterleri:**
-- 2+ projede aynı instinct ID
-- Ortalama güven >= 0.8
+**Auto-promotion criteria:**
+- Same instinct ID in 2+ projects
+- Average confidence >= 0.8
 
-**Nasıl yükseltilir:**
+**How to promote:**
 
 ```bash
-# Belirli bir instinct'i yükselt
+# Promote a specific instinct
 python3 instinct-cli.py promote prefer-explicit-errors
 
-# Tüm uygun instinct'leri otomatik yükselt
+# Auto-promote all qualifying instincts
 python3 instinct-cli.py promote
 
-# Değişiklik yapmadan önizle
+# Preview without changes
 python3 instinct-cli.py promote --dry-run
 ```
 
-`/evolve` komutu ayrıca yükseltme adaylarını önerir.
+The `/evolve` command also suggests promotion candidates.
 
-## Güven Skorlaması
+## Confidence Scoring
 
-Güven zamanla evrimleşir:
+Confidence evolves over time:
 
-| Skor | Anlamı | Davranış |
+| Score | Meaning | Behavior |
 |-------|---------|----------|
-| 0.3 | Geçici | Önerilir ama zorunlu değil |
-| 0.5 | Orta | İlgili olduğunda uygulanır |
-| 0.7 | Güçlü | Uygulama için otomatik onaylanır |
-| 0.9 | Neredeyse kesin | Temel davranış |
+| 0.3 | Tentative | Suggested but not enforced |
+| 0.5 | Moderate | Applied when relevant |
+| 0.7 | Strong | Auto-approved for application |
+| 0.9 | Near-certain | Core behavior |
 
-**Güven artar** şu durumlarda:
-- Kalıp tekrar tekrar gözlemlenir
-- Kullanıcı önerilen davranışı düzeltmez
-- Diğer kaynaklardan benzer instinct'ler hemfikirdir
+**Confidence increases** when:
+- Pattern is repeatedly observed
+- User doesn't correct the suggested behavior
+- Similar instincts from other sources agree
 
-**Güven azalır** şu durumlarda:
-- Kullanıcı davranışı açıkça düzeltir
-- Kalıp uzun süre gözlemlenmez
-- Çelişkili kanıt ortaya çıkar
+**Confidence decreases** when:
+- User explicitly corrects the behavior
+- Pattern isn't observed for extended periods
+- Contradicting evidence appears
 
-## Neden Gözlem için Skill'ler Yerine Hook'lar?
+## Why Hooks vs Skills for Observation?
 
-> "v1 gözlem için skill'lere güveniyordu. Skill'ler olasılıksaldır -- Claude'un yargısına göre zamanın ~%50-80'inde tetiklenirler."
+> "v1 relied on skills to observe. Skills are probabilistic -- they fire ~50-80% of the time based on Claude's judgment."
 
-Hook'lar **%100** deterministik olarak tetiklenir. Bu şu anlama gelir:
-- Her tool çağrısı gözlemlenir
-- Hiçbir kalıp kaçırılmaz
-- Öğrenme kapsamlıdır
+Hooks fire **100% of the time**, deterministically. This means:
+- Every tool call is observed
+- No patterns are missed
+- Learning is comprehensive
 
-## Geriye Dönük Uyumluluk
+## Backward Compatibility
 
-v2.1, v2.0 ve v1 ile tamamen uyumludur:
-- `~/.claude/homunculus/instincts/` içindeki mevcut global instinct'ler hala global instinct olarak çalışır
-- v1'den `~/.claude/skills/learned/` skill'leri hala çalışır
-- Stop hook hala çalışır (ama şimdi v2'ye de beslenir)
-- Kademeli geçiş: her ikisini de paralel çalıştırın
+v2.1 is fully compatible with v2.0 and v1:
+- Existing global instincts can be migrated from `~/.claude/homunculus/instincts/` with `scripts/migrate-homunculus.sh`
+- Existing `~/.claude/skills/learned/` skills from v1 still work
+- Stop hook still runs (but now also feeds into v2)
+- Gradual migration: run both in parallel
 
-## Gizlilik
+## Privacy
 
-- Gözlemler makinenizde **yerel** kalır
-- Proje kapsamlı instinct'ler proje başına izoledir
-- Sadece **instinct'ler** (kalıplar) dışa aktarılabilir — ham gözlemler değil
-- Gerçek kod veya konuşma içeriği paylaşılmaz
-- Neyin dışa aktarılacağını ve yükseltileceğini siz kontrol edersiniz
+- Observations stay **local** on your machine
+- Project-scoped instincts are isolated per project
+- Only **instincts** (patterns) can be exported — not raw observations
+- No actual code or conversation content is shared
+- You control what gets exported and promoted
 
-## İlgili
+## Related
 
-- [ECC-Tools GitHub App](https://github.com/apps/ecc-tools) - Repo geçmişinden instinct'ler oluştur
-- Homunculus - v2 instinct tabanlı mimariye ilham veren topluluk projesi (atomik gözlemler, güven skorlaması, instinct evrim hattı)
-- [The Longform Guide](https://x.com/affaanmustafa/status/2014040193557471352) - Sürekli öğrenme bölümü
+- [ECC-Tools GitHub App](https://github.com/apps/ecc-tools) - Generate instincts from repo history
+- Homunculus - Community project that inspired the v2 instinct-based architecture (atomic observations, confidence scoring, instinct evolution pipeline)
+- [The Longform Guide](https://x.com/affaanmustafa/status/2014040193557471352) - Continuous learning section
 
 ---
 
-*Instinct tabanlı öğrenme: Claude'a kalıplarınızı öğretmek, her seferinde bir proje.*
+*Instinct-based learning: teaching Claude your patterns, one project at a time.*

@@ -1,27 +1,52 @@
 ---
 name: continuous-learning-v2
-description: Instinct-based learning system that observes sessions via hooks, creates atomic instincts with confidence scoring, and evolves them into skills/commands/agents.
-version: 2.0.0
+description: Instinct-based learning system that observes sessions via hooks, creates atomic instincts with confidence scoring, and evolves them into skills/commands/agents. v2.1 adds project-scoped instincts to prevent cross-project contamination.
+origin: ECC
+version: 2.1.0
 ---
 
-# 持續學習 v2 - 基於本能的架構
+# Continuous Learning v2.1 - Instinct
+-Based Architecture
 
-進階學習系統，透過原子「本能」（帶信心評分的小型學習行為）將你的 Claude Code 工作階段轉化為可重用知識。
+An advanced learning system that turns your Claude Code sessions into reusable knowledge through atomic "instincts" - small learned behaviors with confidence scoring.
 
-## v2 的新功能
+**v2.1** adds **project-scoped instincts** — React patterns stay in your React project, Python conventions stay in your Python project, and universal patterns (like "always validate input") are shared globally.
 
-| 功能 | v1 | v2 |
-|------|----|----|
-| 觀察 | Stop hook（工作階段結束） | PreToolUse/PostToolUse（100% 可靠） |
-| 分析 | 主要上下文 | 背景 agent（Haiku） |
-| 粒度 | 完整技能 | 原子「本能」 |
-| 信心 | 無 | 0.3-0.9 加權 |
-| 演化 | 直接到技能 | 本能 → 聚類 → 技能/指令/agent |
-| 分享 | 無 | 匯出/匯入本能 |
+## When to Activate
 
-## 本能模型
+- Setting up automatic learning from Claude Code sessions
+- Configuring instinct-based behavior extraction via hooks
+- Tuning confidence thresholds for learned behaviors
+- Reviewing, exporting, or importing instinct libraries
+- Evolving instincts into full skills, commands, or agents
+- Managing project-scoped vs global instincts
+- Promoting instincts from project to global scope
 
-本能是一個小型學習行為：
+## What's New in v2.1
+
+| Feature | v2.0 | v2.1 |
+|---------|------|------|
+| Storage | Global (`~/.claude/homunculus/`) | Project-scoped (`${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/projects/<hash>/`) |
+| Scope | All instincts apply everywhere | Project-scoped + global |
+| Detection | None | git remote URL / repo path |
+| Promotion | N/A | Project → global when seen in 2+ projects |
+| Commands | 4 (status/evolve/export/import) | 6 (+promote/projects) |
+| Cross-project | Contamination risk | Isolated by default |
+
+## What's New in v2 (vs v1)
+
+| Feature | v1 | v2 |
+|---------|----|----|
+| Observation | Stop hook (session end) | PreToolUse/PostToolUse (100% reliable) |
+| Analysis | Main context | Background agent (Haiku) |
+| Granularity | Full skills | Atomic "instincts" |
+| Confidence | None | 0.3-0.9 weighted |
+| Evolution | Direct to skill | Instincts -> cluster -> skill/command/agent |
+| Sharing | None | Export/import instincts |
+
+## The Instinct Model
+
+An instinct is a small learned behavior:
 
 ```yaml
 ---
@@ -30,75 +55,110 @@ trigger: "when writing new functions"
 confidence: 0.7
 domain: "code-style"
 source: "session-observation"
+scope: project
+project_id: "a1b2c3d4e5f6"
+project_name: "my-react-app"
 ---
 
-# 偏好函式風格
+# Prefer Functional Style
 
-## 動作
-適當時使用函式模式而非類別。
+## Action
+Use functional patterns over classes when appropriate.
 
-## 證據
-- 觀察到 5 次函式模式偏好
-- 使用者在 2025-01-15 將基於類別的方法修正為函式
+## Evidence
+- Observed 5 instances of functional pattern preference
+- User corrected class-based approach to functional on 2025-01-15
 ```
 
-**屬性：**
-- **原子性** — 一個觸發器，一個動作
-- **信心加權** — 0.3 = 試探性，0.9 = 近乎確定
-- **領域標記** — code-style、testing、git、debugging、workflow 等
-- **證據支持** — 追蹤建立它的觀察
+**Properties:**
+- **Atomic** -- one trigger, one action
+- **Confidence-weighted** -- 0.3 = tentative, 0.9 = near certain
+- **Domain-tagged** -- code-style, testing, git, debugging, workflow, etc.
+- **Evidence-backed** -- tracks what observations created it
+- **Scope-aware** -- `project` (default) or `global`
 
-## 運作方式
+## How It Works
 
 ```
-工作階段活動
-      │
-      │ Hooks 捕獲提示 + 工具使用（100% 可靠）
-      ▼
-┌─────────────────────────────────────────┐
-│         observations.jsonl              │
-│   （提示、工具呼叫、結果）               │
-└─────────────────────────────────────────┘
-      │
-      │ Observer agent 讀取（背景、Haiku）
-      ▼
-┌─────────────────────────────────────────┐
-│          模式偵測                        │
-│   • 使用者修正 → 本能                   │
-│   • 錯誤解決 → 本能                     │
-│   • 重複工作流程 → 本能                 │
-└─────────────────────────────────────────┘
-      │
-      │ 建立/更新
-      ▼
-┌─────────────────────────────────────────┐
-│         instincts/personal/             │
-│   • prefer-functional.md (0.7)          │
-│   • always-test-first.md (0.9)          │
-│   • use-zod-validation.md (0.6)         │
-└─────────────────────────────────────────┘
-      │
-      │ /evolve 聚類
-      ▼
-┌─────────────────────────────────────────┐
-│              evolved/                   │
-│   • commands/new-feature.md             │
-│   • skills/testing-workflow.md          │
-│   • agents/refactor-specialist.md       │
-└─────────────────────────────────────────┘
+Session Activity (in a git repo)
+      |
+      | Hooks capture prompts + tool use (100% reliable)
+      | + detect project context (git remote / repo path)
+      v
++---------------------------------------------+
+|  projects/<project-hash>/observations.jsonl  |
+|   (prompts, tool calls, outcomes, project)   |
++---------------------------------------------+
+      |
+      | Observer agent reads (background, Haiku)
+      v
++---------------------------------------------+
+|          PATTERN DETECTION                   |
+|   * User corrections -> instinct             |
+|   * Error resolutions -> instinct            |
+|   * Repeated workflows -> instinct           |
+|   * Scope decision: project or global?       |
++---------------------------------------------+
+      |
+      | Creates/updates
+      v
++---------------------------------------------+
+|  projects/<project-hash>/instincts/personal/ |
+|   * prefer-functional.yaml (0.7) [project]   |
+|   * use-react-hooks.yaml (0.9) [project]     |
++---------------------------------------------+
+|  instincts/personal/  (GLOBAL)               |
+|   * always-validate-input.yaml (0.85) [global]|
+|   * grep-before-edit.yaml (0.6) [global]     |
++---------------------------------------------+
+      |
+      | /evolve clusters + /promote
+      v
++---------------------------------------------+
+|  projects/<hash>/evolved/ (project-scoped)   |
+|  evolved/ (global)                           |
+|   * commands/new-feature.md                  |
+|   * skills/testing-workflow.md               |
+|   * agents/refactor-specialist.md            |
++---------------------------------------------+
 ```
 
-## 快速開始
+## Project Detection
 
-### 1. 啟用觀察 Hooks
+The system automatically detects your current project:
 
-**如果作為外掛安裝**（建議）：
+1. **`CLAUDE_PROJECT_DIR` env var** (highest priority)
+2. **`git remote get-url origin`** -- hashed to create a portable project ID (same repo on different machines gets the same ID)
+3. **`git rev-parse --show-toplevel`** -- fallback using repo path (machine-specific)
+4. **Global fallback** -- if no project is detected, instincts go to global scope
 
-不需要在 `~/.claude/settings.json` 中額外加入 hook。Claude Code v2.1+ 會自動載入外掛的 `hooks/hooks.json`，其中已經註冊了 `observe.sh`。
+Each project gets a 12-character hash ID (e.g., `a1b2c3d4e5f6`). A registry file at `${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/projects.json` maps IDs to human-readable names.
 
-如果你之前把 `observe.sh` 複製到 `~/.claude/settings.json`，請移除重複的 `PreToolUse` / `PostToolUse` 區塊。重複註冊會造成重複執行，並觸發 `${CLAUDE_PLUGIN_ROOT}` 解析錯誤；這個變數只會在外掛自己的 `hooks/hooks.json` 中展開。
+### Data Directory
 
-**如果手動安裝到 `~/.claude/skills`**，新增到你的 `~/.claude/settings.json`：
+Continuous-learning-v2 stores observer data outside `~/.claude` so Claude Code's sensitive-path guard does not block background instinct writes:
+
+1. `CLV2_HOMUNCULUS_DIR` when set to an absolute path
+2. `$XDG_DATA_HOME/ecc-homunculus`
+3. `$HOME/.local/share/ecc-homunculus`
+
+Existing users with data at `~/.claude/homunculus` can migrate once:
+
+```bash
+bash skills/continuous-learning-v2/scripts/migrate-homunculus.sh
+```
+
+## Quick Start
+
+### 1. Enable Observation Hooks
+
+**If installed as a plugin** (recommended):
+
+No extra `settings.json` hook block is required. Claude Code v2.1+ auto-loads the plugin `hooks/hooks.json`, and `observe.sh` is already registered there.
+
+If you previously copied `observe.sh` into `~/.claude/settings.json`, remove that duplicate `PreToolUse` / `PostToolUse` block. Duplicating the plugin hook causes double execution and `${CLAUDE_PLUGIN_ROOT}` resolution errors because that variable is only available inside plugin-managed `hooks/hooks.json` entries.
+
+**If installed manually** to `~/.claude/skills`, add this to your `~/.claude/settings.json`:
 
 ```json
 {
@@ -121,143 +181,180 @@ source: "session-observation"
 }
 ```
 
-### 2. 初始化目錄結構
+### 2. Initialize Directory Structure
+
+The system creates directories automatically on first use, but you can also create them manually:
 
 ```bash
-mkdir -p ~/.claude/homunculus/{instincts/{personal,inherited},evolved/{agents,skills,commands}}
-touch ~/.claude/homunculus/observations.jsonl
+# Global directories
+mkdir -p "${XDG_DATA_HOME:-$HOME/.local/share}/ecc-homunculus"/{instincts/{personal,inherited},evolved/{agents,skills,commands},projects}
+
+# Project directories are auto-created when the hook first runs in a git repo
 ```
 
-### 3. 執行 Observer Agent（可選）
-
-觀察者可以在背景執行並分析觀察：
+### 3. Use the Instinct Commands
 
 ```bash
-# 啟動背景觀察者
-~/.claude/skills/continuous-learning-v2/agents/start-observer.sh
+/instinct-status     # Show learned instincts (project + global)
+/evolve              # Cluster related instincts into skills/commands
+/instinct-export     # Export instincts to file
+/instinct-import     # Import instincts from others
+/promote             # Promote project instincts to global scope
+/projects            # List all known projects and their instinct counts
 ```
 
-## 指令
+## Commands
 
-| 指令 | 描述 |
-|------|------|
-| `/instinct-status` | 顯示所有學習本能及其信心 |
-| `/evolve` | 將相關本能聚類為技能/指令 |
-| `/instinct-export` | 匯出本能以分享 |
-| `/instinct-import <file>` | 從他人匯入本能 |
+| Command | Description |
+|---------|-------------|
+| `/instinct-status` | Show all instincts (project-scoped + global) with confidence |
+| `/evolve` | Cluster related instincts into skills/commands, suggest promotions |
+| `/instinct-export` | Export instincts (filterable by scope/domain) |
+| `/instinct-import <file>` | Import instincts with scope control |
+| `/promote [id]` | Promote project instincts to global scope |
+| `/projects` | List all known projects and their instinct counts |
 
-## 設定
+## Configuration
 
-編輯 `config.json`：
+Edit `config.json` to control the background observer:
 
 ```json
 {
-  "version": "2.0",
-  "observation": {
-    "enabled": true,
-    "store_path": "~/.claude/homunculus/observations.jsonl",
-    "max_file_size_mb": 10,
-    "archive_after_days": 7
-  },
-  "instincts": {
-    "personal_path": "~/.claude/homunculus/instincts/personal/",
-    "inherited_path": "~/.claude/homunculus/instincts/inherited/",
-    "min_confidence": 0.3,
-    "auto_approve_threshold": 0.7,
-    "confidence_decay_rate": 0.05
-  },
+  "version": "2.1",
   "observer": {
-    "enabled": true,
-    "model": "haiku",
+    "enabled": false,
     "run_interval_minutes": 5,
-    "patterns_to_detect": [
-      "user_corrections",
-      "error_resolutions",
-      "repeated_workflows",
-      "tool_preferences"
-    ]
-  },
-  "evolution": {
-    "cluster_threshold": 3,
-    "evolved_path": "~/.claude/homunculus/evolved/"
+    "min_observations_to_analyze": 20
   }
 }
 ```
 
-## 檔案結構
+| Key | Default | Description |
+|-----|---------|-------------|
+| `observer.enabled` | `false` | Enable the background observer agent |
+| `observer.run_interval_minutes` | `5` | How often the observer analyzes observations |
+| `observer.min_observations_to_analyze` | `20` | Minimum observations before analysis runs |
+
+Other behavior (observation capture, instinct thresholds, project scoping, promotion criteria) is configured via code defaults in `instinct-cli.py` and `observe.sh`.
+
+## File Structure
 
 ```
-~/.claude/homunculus/
-├── identity.json           # 你的個人資料、技術水平
-├── observations.jsonl      # 當前工作階段觀察
-├── observations.archive/   # 已處理觀察
-├── instincts/
-│   ├── personal/           # 自動學習本能
-│   └── inherited/          # 從他人匯入
-└── evolved/
-    ├── agents/             # 產生的專業 agents
-    ├── skills/             # 產生的技能
-    └── commands/           # 產生的指令
+${XDG_DATA_HOME:-~/.local/share}/ecc-homunculus/
++-- identity.json           # Your profile, technical level
++-- projects.json           # Registry: project hash -> name/path/remote
++-- observations.jsonl      # Global observations (fallback)
++-- instincts/
+|   +-- personal/           # Global auto-learned instincts
+|   +-- inherited/          # Global imported instincts
++-- evolved/
+|   +-- agents/             # Global generated agents
+|   +-- skills/             # Global generated skills
+|   +-- commands/           # Global generated commands
++-- projects/
+    +-- a1b2c3d4e5f6/       # Project hash (from git remote URL)
+    |   +-- project.json    # Per-project metadata mirror (id/name/root/remote)
+    |   +-- observations.jsonl
+    |   +-- observations.archive/
+    |   +-- instincts/
+    |   |   +-- personal/   # Project-specific auto-learned
+    |   |   +-- inherited/  # Project-specific imported
+    |   +-- evolved/
+    |       +-- skills/
+    |       +-- commands/
+    |       +-- agents/
+    +-- f6e5d4c3b2a1/       # Another project
+        +-- ...
 ```
 
-## 與 Skill Creator 整合
+## Scope Decision Guide
 
-當你使用 [Skill Creator GitHub App](https://skill-creator.app) 時，它現在產生**兩者**：
-- 傳統 SKILL.md 檔案（用於向後相容）
-- 本能集合（用於 v2 學習系統）
+| Pattern Type | Scope | Examples |
+|-------------|-------|---------|
+| Language/framework conventions | **project** | "Use React hooks", "Follow Django REST patterns" |
+| File structure preferences | **project** | "Tests in `__tests__`/", "Components in src/components/" |
+| Code style | **project** | "Use functional style", "Prefer dataclasses" |
+| Error handling strategies | **project** | "Use Result type for errors" |
+| Security practices | **global** | "Validate user input", "Sanitize SQL" |
+| General best practices | **global** | "Write tests first", "Always handle errors" |
+| Tool workflow preferences | **global** | "Grep before Edit", "Read before Write" |
+| Git practices | **global** | "Conventional commits", "Small focused commits" |
 
-從倉庫分析的本能有 `source: "repo-analysis"` 並包含來源倉庫 URL。
+## Instinct Promotion (Project -> Global)
 
-## 信心評分
+When the same instinct appears in multiple projects with high confidence, it's a candidate for promotion to global scope.
 
-信心隨時間演化：
+**Auto-promotion criteria:**
+- Same instinct ID in 2+ projects
+- Average confidence >= 0.8
 
-| 分數 | 意義 | 行為 |
-|------|------|------|
-| 0.3 | 試探性 | 建議但不強制 |
-| 0.5 | 中等 | 相關時應用 |
-| 0.7 | 強烈 | 自動批准應用 |
-| 0.9 | 近乎確定 | 核心行為 |
+**How to promote:**
 
-**信心增加**當：
-- 重複觀察到模式
-- 使用者不修正建議行為
-- 來自其他來源的類似本能同意
+```bash
+# Promote a specific instinct
+python3 instinct-cli.py promote prefer-explicit-errors
 
-**信心減少**當：
-- 使用者明確修正行為
-- 長期未觀察到模式
-- 出現矛盾證據
+# Auto-promote all qualifying instincts
+python3 instinct-cli.py promote
 
-## 為何 Hooks vs Skills 用於觀察？
+# Preview without changes
+python3 instinct-cli.py promote --dry-run
+```
 
-> "v1 依賴技能進行觀察。技能是機率性的——它們根據 Claude 的判斷觸發約 50-80% 的時間。"
+The `/evolve` command also suggests promotion candidates.
 
-Hooks **100% 的時間**確定性地觸發。這意味著：
-- 每個工具呼叫都被觀察
-- 無模式被遺漏
-- 學習是全面的
+## Confidence Scoring
 
-## 向後相容性
+Confidence evolves over time:
 
-v2 完全相容 v1：
-- 現有 `~/.claude/skills/learned/` 技能仍可運作
-- Stop hook 仍執行（但現在也餵入 v2）
-- 漸進遷移路徑：兩者並行執行
+| Score | Meaning | Behavior |
+|-------|---------|----------|
+| 0.3 | Tentative | Suggested but not enforced |
+| 0.5 | Moderate | Applied when relevant |
+| 0.7 | Strong | Auto-approved for application |
+| 0.9 | Near-certain | Core behavior |
 
-## 隱私
+**Confidence increases** when:
+- Pattern is repeatedly observed
+- User doesn't correct the suggested behavior
+- Similar instincts from other sources agree
 
-- 觀察保持在你的機器**本機**
-- 只有**本能**（模式）可被匯出
-- 不會分享實際程式碼或對話內容
-- 你控制匯出內容
+**Confidence decreases** when:
+- User explicitly corrects the behavior
+- Pattern isn't observed for extended periods
+- Contradicting evidence appears
 
-## 相關
+## Why Hooks vs Skills for Observation?
 
-- [Skill Creator](https://skill-creator.app) - 從倉庫歷史產生本能
-- Homunculus - 啟發 v2 架構的社區專案（原子觀察、信心評分、本能演化管線）
-- [Longform Guide](https://x.com/affaanmustafa/status/2014040193557471352) - 持續學習章節
+> "v1 relied on skills to observe. Skills are probabilistic -- they fire ~50-80% of the time based on Claude's judgment."
+
+Hooks fire **100% of the time**, deterministically. This means:
+- Every tool call is observed
+- No patterns are missed
+- Learning is comprehensive
+
+## Backward Compatibility
+
+v2.1 is fully compatible with v2.0 and v1:
+- Existing global instincts can be migrated from `~/.claude/homunculus/instincts/` with `scripts/migrate-homunculus.sh`
+- Existing `~/.claude/skills/learned/` skills from v1 still work
+- Stop hook still runs (but now also feeds into v2)
+- Gradual migration: run both in parallel
+
+## Privacy
+
+- Observations stay **local** on your machine
+- Project-scoped instincts are isolated per project
+- Only **instincts** (patterns) can be exported — not raw observations
+- No actual code or conversation content is shared
+- You control what gets exported and promoted
+
+## Related
+
+- [ECC-Tools GitHub App](https://github.com/apps/ecc-tools) - Generate instincts from repo history
+- Homunculus - Community project that inspired the v2 instinct-based architecture (atomic observations, confidence scoring, instinct evolution pipeline)
+- [The Longform Guide](https://x.com/affaanmustafa/status/2014040193557471352) - Continuous learning section
 
 ---
 
-*基於本能的學習：一次一個觀察，教導 Claude 你的模式。*
+*Instinct-based learning: teaching Claude your patterns, one project at a time.*

@@ -57,9 +57,7 @@
         "hooks-runtime",
         "platform-configs",
         "workflow-quality",
-        "research-apis",
-        "business-content",
-        "social-distribution"
+        "research-apis"
       ]
     },
     "full": {
@@ -75,17 +73,10 @@
         "workflow-quality",
         "security",
         "research-apis",
-        "business-content",
         "operator-workflows",
-        "social-distribution",
-        "media-generation",
         "orchestration",
-        "swift-apple",
         "agentic-patterns",
-        "devops-infra",
-        "machine-learning",
-        "supply-chain-domain",
-        "document-processing"
+        "devops-infra"
       ]
     }
   }

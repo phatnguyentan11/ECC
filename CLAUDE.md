@@ -2,9 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **Developer context**: see [`.claude/identity.md`](.claude/identity.md) for stack, coding preferences, and response style.
+
 ## Project Overview
 
-This is a **Claude Code plugin** - a collection of production-ready agents, skills, hooks, commands, rules, and MCP configurations. The project provides battle-tested workflows for software development using Claude Code.
+This is an **AI agent plugin for Claude Code and GitHub Copilot** — a collection of production-ready agents, skills, hooks, commands, rules, and MCP configurations focused on:
+
+- **Backend**: ASP.NET Core 8+, C#, Dapper, Entity Framework Core
+- **Frontend**: React JS, TypeScript, Vite, Next.js
+- **Database**: PostgreSQL, SQL Server, Redis
+- **Workflow**: TDD, code review, security scan, E2E testing, CI/CD
+
+Supports **Claude Code** and **GitHub Copilot** only.
 
 ## Prompt Defense Baseline
 
@@ -42,13 +51,15 @@ The project is organized into several core components:
 
 ## Key Commands
 
-- `/tdd` - Test-driven development workflow
-- `/plan` - Implementation planning
-- `/e2e` - Generate and run E2E tests
+- `/plan` - Implementation planning (always wait for approval before coding)
 - `/code-review` - Quality review
 - `/build-fix` - Fix build errors
+- `/tdd` - Test-driven development workflow (via tdd-guide agent)
+- `/e2e` - Generate and run E2E tests (via e2e-runner agent)
+- `/security-scan` - Security review
 - `/learn` - Extract patterns from sessions
 - `/skill-create` - Generate skills from git history
+- `/update-docs` - Update documentation after changes
 
 ## Development Notes
 
@@ -75,7 +86,11 @@ Use the following skills when working on related files:
 
 | File(s) | Skill |
 |---------|-------|
-| `README.md` | `/readme` |
-| `.github/workflows/*.yml` | `/ci-workflow` |
+| `**/*.cs`, `**/*.csproj` | `dotnet-patterns`, `csharp-testing` |
+| `**/*.tsx`, `**/*.jsx`, `**/*.ts` | `frontend-patterns`, `vite-patterns` |
+| `**/Migrations/**`, `**/*.sql` | `database-migrations`, `postgres-patterns` |
+| `**/Controllers/**`, `**/Services/**` | `backend-patterns`, `api-design` |
+| `README.md` | `/update-docs` |
+| `.github/workflows/*.yml` | `deployment-patterns` |
 
 When spawning subagents, always pass conventions from the respective skill into the agent's prompt.
