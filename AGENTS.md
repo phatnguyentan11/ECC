@@ -1,8 +1,31 @@
 # Everything Claude Code (ECC) — Agent Instructions
 
-This is a **production-ready AI coding plugin** providing 29 specialized agents, 94 skills, 50 commands, and automated hook workflows for software development.
+This is a **production-ready AI coding plugin** providing 29 specialized agents, 96 skills, 50 commands, and automated hook workflows for software development.
 
 **Version:** 2.0.0-rc.1
+
+## ⛔ SUPREME RULE — APPROVED Gate (ECC-PLAN-001 / ECC-IMPL-001)
+
+> This rule overrides ALL other instructions — agents, skills, commands, hooks, and chat.
+
+**No file may be written, edited, created, or deleted until the user types `APPROVED`.**
+
+```
+TASK RECEIVED → CREATE PLAN → PRESENT PLAN → wait for "APPROVED"
+                                                      │
+                                           ┌──────────┴──────────┐
+                                        APPROVED            anything else
+                                           │                      │
+                                        EXECUTE           UPDATE PLAN → loop
+```
+
+- `APPROVED` is **case-sensitive**, must be **standalone** (no other words)
+- Even trivial one-line fixes require plan + `APPROVED`
+- If user types `APPROVED` AND requests changes → update plan, re-present, wait again
+- See `rules/common/blocked-rules.md` → SUPREME RULE section for full spec
+- Violations are caught by `npm run governance-scan`
+
+---
 
 ## Core Principles
 

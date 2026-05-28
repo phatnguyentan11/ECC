@@ -17,6 +17,37 @@ A comprehensive guide to creating effective skills for Everything Claude Code (E
 
 ---
 
+## Token Budget Requirements
+
+> **Non-negotiable.** Skills that exceed token budgets will be rejected in CI.
+
+| Component | Budget | Overflow Action |
+|-----------|--------|----------------|
+| `SKILL.md` body | **≤5,000 tokens** | Move content to `reference/` subdirectory |
+| Long checklists / templates | Unlimited | Store in `skills/<name>/reference/` |
+| Deterministic scripts | Unlimited | Store in `skills/<name>/scripts/` |
+| Agent body (`.md`) | **≤3,000 tokens** | Summarize; link to reference docs |
+
+### 3-Level Progressive Disclosure
+
+Every skill MUST follow this structure:
+
+```
+Level 1 — Trigger summary (2-3 sentences in SKILL.md frontmatter/header)
+Level 2 — Core workflow (SKILL.md body, ≤5k tokens)
+Level 3 — Reference material (reference/ subdirectory, loaded on-demand)
+```
+
+A user must be able to use the skill with Level 1+2 only. Level 3 is supplementary.
+
+### Script Rules
+
+- Scripts in `skills/<name>/scripts/` must not perform outbound HTTP/HTTPS requests
+- Exception requires entry in `rules/common/blocked-rules.md` Approved Exceptions table
+- See `ECC-SKILL-001` in blocked-rules for details
+
+---
+
 ## What Are Skills?
 
 Skills are **knowledge modules** that Claude Code loads based on context. They provide:

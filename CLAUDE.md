@@ -15,6 +15,18 @@ This is an **AI agent plugin for Claude Code and GitHub Copilot** — a collecti
 
 Supports **Claude Code** and **GitHub Copilot** only.
 
+## Context Load Order
+
+When context window is under pressure, load in this priority order and stop when budget is exhausted:
+
+1. **Tier 1 (always — ≤10k tokens):** `rules/common/blocked-rules.md` → `AGENTS.md` (orchestration section)
+2. **Tier 2 (task-relevant — ≤25k tokens):** active agent + active skill(s) + relevant `rules/common/` files
+3. **Tier 3 (on-demand):** full skills library, documentation, MCP configs
+
+If only Tier 1 fits, note "reduced context mode" in the response.
+
+---
+
 ## Supreme Rules — MANDATORY (highest priority, always enforced)
 
 These rules apply to **every interaction** — chat, agent, skill, command, hook — without exception.

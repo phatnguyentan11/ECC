@@ -2,7 +2,7 @@
   "plugins": [
     {
       "name": "ecc-universal",
-      "description": "Everything Claude Code — 29 agents, 94 skills, 50 legacy command shims"
+      "description": "Everything Claude Code — 29 agents, 96 skills, 50 legacy command shims"
     }
   ]
 }

@@ -216,12 +216,14 @@
     "discussion:audit": "node scripts/discussion-audit.js",
     "security:ioc-scan": "node scripts/ci/scan-supply-chain-iocs.js",
     "security:advisory-sources": "node scripts/ci/supply-chain-advisory-sources.js",
+    "governance-scan": "node scripts/governance-scan.js",
+    "governance-scan:dry-run": "node scripts/governance-scan.js --dry-run",
     "claw": "node scripts/claw.js",
     "orchestrate:status": "node scripts/orchestration-status.js",
     "orchestrate:tmux": "node scripts/orchestrate-worktrees.js",
     "test": "node scripts/ci/check-unicode-safety.js && node scripts/ci/validate-agents.js && node scripts/ci/validate-commands.js && node scripts/ci/validate-rules.js && node scripts/ci/validate-skills.js && node scripts/ci/validate-hooks.js && node scripts/ci/validate-install-manifests.js && node scripts/ci/validate-no-personal-paths.js && npm run catalog:check && npm run command-registry:check && node tests/run-all.js",
     "coverage": "c8 --all --include=\"scripts/**/*.js\" --check-coverage --lines 80 --functions 80 --branches 80 --statements 80 --reporter=text --reporter=lcov node tests/run-all.js",
-    "dashboard": "python3 ./ecc_dashboard.py"
+    "dashboard": "node -e \"require('child_process').execFileSync(process.platform==='win32'?'python':'python3',['./ecc_dashboard.py'],{stdio:'inherit'})\""
   },
   "dependencies": {
     "@iarna/toml": "^2.2.5",
