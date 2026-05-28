@@ -55,8 +55,7 @@ rules/
 > Flattening them into one directory causes language-specific files to overwrite
 > common rules, and breaks the relative `../common/` references used by
 > language-specific files.
->
-> Use the ECC-owned namespace below for user-level Claude installs. Flat
+> > Use the ECC-owned namespace below for user-level Claude installs. Flat
 > package-level destinations can collide with non-ECC rule packs and do not
 > match the main README guidance.
 

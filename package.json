@@ -77,7 +77,6 @@
     "scripts/platform-audit.js",
     "scripts/preview-pack-smoke.js",
     "scripts/release-approval-gate.js",
-    "scripts/release-video-suite.js",
     "scripts/hooks/",
     "scripts/install-apply.js",
     "scripts/install-plan.js",

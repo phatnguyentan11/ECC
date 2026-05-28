@@ -187,8 +187,7 @@ After planning:
 - Use `/pr` or `/prp-pr` to open a pull request
 
 > **Need requirements first?** Use `/plan-prd` for a lean PRD at `.claude/prds/{name}.prd.md`.
->
-> **Need the legacy PRP flow?** Use `/prp-plan` for deep PRP planning with `.claude/PRPs/` artifacts. Use `/prp-implement` to execute those plans with rigorous validation loops.
+> > **Need the legacy PRP flow?** Use `/prp-plan` for deep PRP planning with `.claude/PRPs/` artifacts. Use `/prp-implement` to execute those plans with rigorous validation loops.
 
 ## Optional Planner Agent
 

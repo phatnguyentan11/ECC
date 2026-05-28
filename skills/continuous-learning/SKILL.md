@@ -7,8 +7,7 @@ origin: ECC
 # Continuous Learning Skill - DEPRECATED
 
 > **DEPRECATED 2026-04-28.** Use `continuous-learning-v2` instead. v2 is a strict superset: stop-hook observation becomes PreToolUse/PostToolUse observation, full skills become atomic instincts with confidence scoring, and global-only storage becomes project-scoped plus global promotion.
->
-> This file is kept for archival reference and backward compatibility with existing installs.
+> > This file is kept for archival reference and backward compatibility with existing installs.
 
 ---
 

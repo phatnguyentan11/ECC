@@ -16,36 +16,35 @@ This is a **production-ready AI coding plugin** providing 29 specialized agents,
 
 | Agent | Purpose | When to Use |
 |-------|---------|-------------|
-| planner | Implementation planning | Complex features, refactoring |
-| architect | System design and scalability | Architectural decisions |
-| tdd-guide | Test-driven development | New features, bug fixes |
-| code-reviewer | Code quality and maintainability | After writing/modifying code |
-| security-reviewer | Vulnerability detection | Before commits, sensitive code |
-| build-error-resolver | Fix build/type errors | When build fails |
-| e2e-runner | End-to-end Playwright testing | Critical user flows |
-| refactor-cleaner | Dead code cleanup | Code maintenance |
-| doc-updater | Documentation and codemaps | Updating docs |
-| cpp-reviewer | C/C++ code review | C and C++ projects |
-| cpp-build-resolver | C/C++ build errors | C and C++ build failures |
-| fsharp-reviewer | F# functional code review | F# projects |
-| docs-lookup | Documentation lookup via Context7 | API/docs questions |
-| go-reviewer | Go code review | Go projects |
-| go-build-resolver | Go build errors | Go build failures |
-| kotlin-reviewer | Kotlin code review | Kotlin/Android/KMP projects |
-| kotlin-build-resolver | Kotlin/Gradle build errors | Kotlin build failures |
-| database-reviewer | PostgreSQL/Supabase specialist | Schema design, query optimization |
-| python-reviewer | Python code review | Python projects |
-| django-reviewer | Django code review | Django apps, DRF APIs, ORM, migrations |
-| django-build-resolver | Django build, migration, and setup errors | Django startup, dependency, migration, collectstatic failures |
-| java-reviewer | Java and Spring Boot code review | Java/Spring Boot projects |
-| java-build-resolver | Java/Maven/Gradle build errors | Java build failures |
-| loop-operator | Autonomous loop execution | Run loops safely, monitor stalls, intervene |
-| harness-optimizer | Harness config tuning | Reliability, cost, throughput |
-| rust-reviewer | Rust code review | Rust projects |
-| rust-build-resolver | Rust build errors | Rust build failures |
-| pytorch-build-resolver | PyTorch runtime/CUDA/training errors | PyTorch build/training failures |
-| mle-reviewer | Production ML pipeline review | ML pipelines, evals, serving, monitoring, rollback |
-| typescript-reviewer | TypeScript/JavaScript code review | TypeScript/JavaScript projects |
+| planner | Expert planning for complex features and refactoring | Complex features, refactoring, architectural changes |
+| architect | System design, scalability, and technical decision-making | Architectural decisions, new features planning |
+| tdd-guide | Test-driven development, 80%+ coverage enforcement | New features, bug fixes |
+| code-reviewer | Code quality and maintainability review | After writing/modifying code (MUST BE USED) |
+| security-reviewer | Vulnerability detection — secrets, SSRF, injection, OWASP Top 10 | Before commits, sensitive code, user input handling |
+| build-error-resolver | Build and TypeScript error resolution, minimal diffs | When build fails or type errors occur |
+| e2e-runner | End-to-end testing with Playwright/Vercel Agent Browser | Critical user flows, E2E test maintenance |
+| refactor-cleaner | Dead code cleanup using knip, depcheck, ts-prune | Code maintenance, removing duplicates |
+| doc-updater | Documentation and codemaps sync | Updating docs, codemaps, READMEs |
+| docs-lookup | Documentation lookup via Context7 MCP | API/docs questions, library usage |
+| database-reviewer | PostgreSQL/Supabase — queries, schema design, performance | Writing SQL, migrations, schema design |
+| loop-operator | Operate autonomous loops, monitor and intervene safely | Autonomous loops, monitoring stalls |
+| harness-optimizer | Agent harness config tuning for reliability, cost, throughput | Harness config reliability and cost |
+| typescript-reviewer | TypeScript/JavaScript code review — type safety, async, security | TypeScript/JavaScript projects (MUST BE USED) |
+| csharp-reviewer | C# code review — .NET conventions, async, security, nullable | C# projects (MUST BE USED) |
+| a11y-architect | Accessibility Architect, WCAG 2.2 compliance for Web and Native | Designing UI components, design systems, accessibility audits |
+| chief-of-staff | Communication triage — email, Slack, LINE, Messenger; draft replies | Multi-channel communication workflows |
+| code-architect | Feature architecture blueprints — files, interfaces, data flow, build order | Designing new features within existing codebase |
+| code-explorer | Codebase analysis — execution paths, architecture layers, dependencies | Understanding existing features before new development |
+| code-simplifier | Code simplification for clarity and maintainability, preserving behavior | Recently modified code cleanup |
+| comment-analyzer | Code comment accuracy, completeness, and comment rot detection | Code comment review and maintenance |
+| conversation-analyzer | Analyze conversation transcripts to find hook-worthy behaviors | Triggered by /hookify without arguments |
+| opensource-forker | Fork projects for open-sourcing — strip secrets, replace internal refs | First stage of opensource-pipeline |
+| opensource-packager | Generate OSS packaging — CLAUDE.md, setup.sh, README, LICENSE, templates | Third stage of opensource-pipeline |
+| opensource-sanitizer | Verify OSS fork is clean — 20+ regex patterns, PASS/FAIL report | Second stage of opensource-pipeline, before public release |
+| performance-optimizer | Performance bottlenecks, bundle size, memory leaks, render optimization | Slow code, profiling, algorithmic improvements |
+| pr-test-analyzer | PR test coverage quality and completeness | Pull request reviews |
+| silent-failure-hunter | Detect silent failures, swallowed errors, bad fallbacks | Code quality review |
+| type-design-analyzer | Type design — encapsulation, invariants, usefulness, enforcement | TypeScript/type system design review |
 
 ## Agent Orchestration
 
@@ -57,6 +56,14 @@ Use agents proactively without user prompt:
 - Security-sensitive code → **security-reviewer**
 - Autonomous loops / loop monitoring → **loop-operator**
 - Harness config reliability and cost → **harness-optimizer**
+- UI/accessibility work → **a11y-architect**
+- OSS release preparation → **opensource-forker** → **opensource-sanitizer** → **opensource-packager**
+- Performance issues → **performance-optimizer**
+- Hook behavior patterns → **conversation-analyzer**
+- Feature architecture design → **code-architect**
+- Codebase exploration before new work → **code-explorer**
+- TypeScript/JavaScript changes → **typescript-reviewer**
+- C# changes → **csharp-reviewer**
 
 Use parallel execution for independent operations — launch multiple agents simultaneously.
 

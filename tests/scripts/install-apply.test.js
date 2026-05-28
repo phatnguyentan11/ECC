@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Tests for scripts/install-apply.js
  */
 

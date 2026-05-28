@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Tests for scripts/lib/install-lifecycle.js
  */
 
