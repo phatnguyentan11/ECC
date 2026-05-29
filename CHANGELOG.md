@@ -1,12 +1,8 @@
 # Changelog
 
-## 2.0.0-rc.1 - 2026-04-28
+All notable changes to this project will be documented in this file.
 
-### Highlights
-
-- Adds the public ECC 2.0 release-candidate surface for the Hermes operator story.
-- Documents ECC as the reusable cross-harness substrate across Claude Code, Codex, Cursor, OpenCode, and Gemini.
-- Adds a sanitized Hermes import skill surface instead of publishing private operator state.
+## [Unreleased]
 
 ### Release Surface
 
